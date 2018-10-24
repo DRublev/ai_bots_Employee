@@ -1,18 +1,29 @@
 import React from 'react';
-import { StyleSheet, Text, View, Button, Picker, AppState, Platform } from 'react-native';
-import { createStackNavigator } from 'react-navigation';
+import { Text, View, Platform } from 'react-native';
 import Screen from './Screen';
 import styles from '../../config';
-import PushNotification from 'react-native-push-notification';
 import PushController from '../PushController';
+import Button from '../Button';
+
+import User from '../../helpers/Api/User';
 
 class Home extends Screen {
     constructor(props) {
         super(props);
 
         this.state = {
-            btnText: 'Click me so hard, pls!'
+            btnText: 'Click me so hard, pls!',
+            users: {},
+            auth: ''
         }
+    }
+
+    onLoginHandler = () => {
+        User.session({}, (data) => {
+            console.warn(data);
+        }, (error) => {
+            console.warn(error);
+        })
     }
 
     onBtnPressedHandler = () => {
@@ -21,19 +32,13 @@ class Home extends Screen {
         if (Platform.OS === 'ios') {
             date = date.toISOString();
         }
-
-        PushNotification.localNotification({
-            message: "More! More!",
-        });
-        
     }
 
     render() {
         return (
             <View style={styles.container}>
-                <Button
-                    onPress={this.onBtnPressedHandler}
-                    title={this.state.btnText} />
+                <Button title={'Login'} onPress={this.onLoginHandler} />
+                <Button title={'Load users'} onPress={this.onBtnPressedHandler} />
             </View>
         );
     }

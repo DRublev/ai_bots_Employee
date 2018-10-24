@@ -1,20 +1,21 @@
 import React from 'react';
 import { createStackNavigator } from 'react-navigation';
 
+//Screens
 import Home from './Screens/Home';
 import Login from './Screens/Login';
 
 const Nav = createStackNavigator(
     {
         Home: {
-            screen: Login
+            screen: Home
         },
         Login: {
             screen: Login
         }
     },
     {
-        initialScreenName: Login,
+        initialScreenName: Home,
         headerMode: 'none',
     }
 );

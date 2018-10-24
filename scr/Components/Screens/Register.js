@@ -1,6 +1,6 @@
 import React from 'react';
-import { StyleSheet, Text, View, Button, Platform, TextInput } from 'react-native';
-import { ThemeProvider } from 'react-native-elements';
+import { Text, View, TextInput } from 'react-native';
+import Button from '../Button';
 import Screen from './Screen';
 import styles from '../../config';
 

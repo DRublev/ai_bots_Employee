@@ -1,7 +1,8 @@
 import React from 'react';
-import { StyleSheet, Text, View, Button, Platform, TextInput } from 'react-native';
-import { ThemeProvider } from 'react-native-elements';
+import { View, TextInput } from 'react-native';
 import Screen from './Screen';
+import Button from '../Button';
+
 import styles from '../../config';
 
 class Login extends Screen {
@@ -10,32 +11,24 @@ class Login extends Screen {
 
         this.state = {
             login: '',
-            pass: ''
+            pass: '',
+            btnText: 'Click me so hard, senpai!'
         }
     }
 
     onLoginBtnHandler = () => {
-
+        this.setState({
+            btnText: 'More'
+        });
     }
 
     render() {
         const { login, pass } = this.state;
 
         return (
-            <ThemeProvider>
-                <View style={styles.container}>
-                    <TextInput
-                        onChange={(val) => this.setState({ login: val })}
-                    />
-                    <TextInput
-                        onChange={(val) => this.setState({ pass: val })}
-                        textContentType={'password'}
-                    />
-                    <Button
-                        onPress={this.onLoginBtnHandler}
-                        title='Login' />
-                </View>
-            </ThemeProvider>
+            <View style={styles.container}>
+                <Button title={this.state.btnText} onPress={this.onLoginBtnHandler} />
+            </View>
         );
     }
 }

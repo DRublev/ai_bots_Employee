@@ -13,4 +13,6 @@ const styles = StyleSheet.create({
     },
 });
 
+export const backendUrl = "192.168.1.5:8081/";
+
 export default styles;
