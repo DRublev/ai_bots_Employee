@@ -23,7 +23,7 @@ class Home extends Screen {
             console.warn(data);
         }, (error) => {
             console.warn(error);
-        })
+        });
     }
 
     onBtnPressedHandler = () => {

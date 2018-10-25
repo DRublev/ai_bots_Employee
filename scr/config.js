@@ -8,11 +8,26 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         justifyContent: 'center',
     },
-    picker: {
-        width: 100,
+    button: {
+        backgroundColor: '#03dac6',
+        color: '#ffffff',
+        height: 50,
+        margin: 10,
+        paddingTop: 15,
+        paddingRight: 15,
+        paddingBottom: 10,
+        paddingLeft: 15
     },
+    textInput: {
+        backgroundColor: '#eeeeee',
+        margin: 10,
+        width: 180
+    },
+    listView: {
+        margin: 0.2
+    }
 });
 
-export const backendUrl = "192.168.1.5:8081/";
+export const backendUrl = 'http://192.168.1.5:4800/';
 
 export default styles;

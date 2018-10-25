@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import PushNotification from 'react-native-push-notification';
+var PushNotification = require('react-native-notifications');
 
 export default class PushController extends Component {
     componentDidMount() {
