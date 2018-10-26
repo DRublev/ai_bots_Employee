@@ -1,5 +1,5 @@
 import React from 'react';
-import { View, TextInput } from 'react-native';
+import { View, TextInput, AsyncStorage } from 'react-native';
 import Screen from './Screen';
 import Button from '../Button';
 import styles from '../../config';
@@ -14,11 +14,11 @@ class Login extends Screen {
         this.state = {
             login: 'admin@admin.ru',
             pass: 'admin@admin.ru',
-            btnText: 'Click me so hard, senpai!'
+            btnText: 'Вход'
         }
     }
 
-    onLoginHandler = () => {
+    onLoginHandler = async () => {
         this.setState({
             auth: ''
         });
@@ -28,19 +28,20 @@ class Login extends Screen {
             password: this.state.pass
         }, (data) => {
             this.setState({
-                auth: data.data.auth
+                auth: data.auth
             });
-        }, (error) => console.warn('error'));
+        });
 
         if (this.state.auth) {
             this.setState({
-                btnText: 'U r in... 3-)!'
+                btnText: 'Вы вошли!'
             });
         }
+
     }
 
     onRegisterHandler = () => {
-        super.navigate('Register');
+        this.navigate('Register');
     }
 
     render() {

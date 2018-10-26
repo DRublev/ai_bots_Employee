@@ -37,8 +37,8 @@ class Home extends Screen {
     render() {
         return (
             <View style={styles.container}>
-                <Button title={'Login'} onPress={this.onLoginHandler} />
-                <Button title={'Load users'} onPress={this.onBtnPressedHandler} />
+                <Button title={'Вход'} onPress={this.onLoginHandler} />
+                <Button title={'Список юзеров'} onPress={this.onBtnPressedHandler} />
             </View>
         );
     }

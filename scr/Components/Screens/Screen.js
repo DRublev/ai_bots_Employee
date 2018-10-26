@@ -1,5 +1,8 @@
 import React from 'react';
-import { Alert } from 'react-native';
+import { Alert, AppState, Platform } from 'react-native';
+import User from '../../helpers/Api/User';
+
+import { NotificationsAndroid } from 'react-native-notifications';
 
 class Screen extends React.Component {
     constructor(props) {
@@ -10,31 +13,46 @@ class Screen extends React.Component {
         };
     }
 
-    goBack = () => {
-        const { navigation } = this.state;
+    componentDidMount() {
+        AppState.addEventListener('change', this.push);
+    }
 
-        navigation.goBack();
+    componentWillUnmount() {
+        AppState.removeEventListener('change', this.push);
+    }
+
+    goBack = () => {
+        const { navigate } = this.props.navigation;
+
+        navigate.goBack();
     }
 
     navigate = (route) => {
-        const { navigation } = this.state;
+        const { navigate } = this.props.navigation;
 
-        navigation(route, { screen: route });
+        navigate(route, { screen: route });
     }
 
-    switchMenu = () => {
-
-    }
-
-    // types: ok, ok/cancel, ok/cancel/askMeLater
-    alert(title, msg, buttons) {
+    alert = (title, msg, buttons) => {
         Alert.alert(title, msg, buttons, { cancelable: false });
     }
 
-    //Get coockies 
-
-    getAuthedUser = () => {
-
+    push = (title, msg, extra) => {
+        Platform.select({
+            ios: () => {
+                NotificationsIOS.localNotification({
+                    alertBody: msg,
+                    alertTitle: title
+                });
+            },
+            android: () => {
+                NotificationsAndroid.localNotification({
+                    title: title,
+                    body: msg,
+                    extra: extra
+                });
+            }
+        });
     }
 }
 

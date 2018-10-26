@@ -6,6 +6,7 @@ import com.facebook.react.ReactApplication;
 import com.oblador.vectoricons.VectorIconsPackage;
 import com.dieam.reactnativepushnotification.ReactNativePushNotificationPackage;
 import com.wix.reactnativenotifications.RNNotificationsPackage;
+import com.psykar.cookiemanager.CookieManagerPackage;
 import com.facebook.react.ReactNativeHost;
 import com.facebook.react.ReactPackage;
 import com.facebook.react.shell.MainReactPackage;
@@ -28,7 +29,8 @@ public class MainApplication extends Application implements ReactApplication {
           new MainReactPackage(),
             new VectorIconsPackage(),
             new ReactNativePushNotificationPackage(),
-            new RNNotificationsPackage()
+            new RNNotificationsPackage(),
+            new CookieManagerPackage()
       );
     }
 

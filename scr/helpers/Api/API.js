@@ -1,15 +1,19 @@
+import React from 'react';
 import { AsyncStorage } from 'react-native';
 
 var config = require('../../config.js');
 
 const urlRoot = config.backendUrl;
 
-class API {
+class API extends React.Component {
   constructor() {
-
+    super();
+    this.state = {};
   }
 
-  postData(url = '', data = {}) {
+  postData = async (url = '', data = {}) => {
+    const token = await AsyncStorage.getItem('key');
+
     // Default options are marked with *
     return fetch(urlRoot + url, {
       method: "POST", // *GET, POST, PUT, DELETE, etc.
@@ -17,6 +21,7 @@ class API {
       cache: "no-cache", // *default, no-cache, reload, force-cache, only-if-cached
       headers: {
         "Content-Type": "application/json; charset=utf-8",
+        'Authorization': 'JWT ' + token
       },
       redirect: "follow", // manual, *follow, error
       referrer: "no-referrer", // no-referrer, *client
@@ -24,37 +29,32 @@ class API {
     }).then(response => {
       return response.json();
     }).catch((error) => {
-      console.warn('API error');
+      console.warn('API error: ' + error.message);
     }); // parses response to JSON
   }
 
-  setCoockie(path, coockie, onError) {
+  setStorage = async (cookie, onError) => {
     try {
-      AsyncStorage.setItem(path, coockie);
-    }
-    catch (error) {
-      onError(error);
+      await AsyncStorage.setItem('key', cookie);
+    } catch (error) {
+      console.warn("Error saving data" + error);
     }
   }
 
-  getCoockie(path, onError) {
+  getStorage = async (path, onError) => {
     try {
-      const value = AsyncStorage.getItem(path);
+      const value = await AsyncStorage.getItem('key');
 
-      if (value !== null) {
-        return value;
-      }
-      else {
-        onError();
-      }
-    }
-    catch (error) {
-      onError(error);
+      this.setState({
+        key: value
+      });
+    } catch (error) {
+      console.log("Error retrieving data" + error);
     }
   }
 
-  clearCoockie(onError) {
-    AsyncStorage.clear((error) => onError(error));
+  clearStorage = async (onError) => {
+    return await AsyncStorage.clear();
   }
 }
 
