@@ -1,6 +1,5 @@
 import React from 'react';
 import { Alert, AppState, Platform } from 'react-native';
-import User from '../../helpers/Api/User';
 
 import { NotificationsAndroid } from 'react-native-notifications';
 

@@ -1,5 +1,5 @@
 import React from 'react';
-import { View, TextInput, AsyncStorage } from 'react-native';
+import { View, TextInput } from 'react-native';
 import Screen from './Screen';
 import Button from '../Button';
 import styles from '../../config';
@@ -57,7 +57,8 @@ class Login extends Screen {
                         this.setState({
                             pass: val
                         });
-                    }} />
+                    }}
+                    secureTextEntry={true} />
 
                 <Button title={this.state.btnText} onPress={this.onLoginHandler} />
                 <Button title={'Регистрация'} onPress={this.onRegisterHandler} />

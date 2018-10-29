@@ -1,10 +1,11 @@
 import API from './API.js';
+import { AsyncStorage } from 'react-native';
 
 var config = require('../../config.js');
 
-const route = 'service'
+const route = 'crmorder';
 
-class Service extends API {
+class CRMOrder extends API {
     constructor(url) {
         super();
 
@@ -17,7 +18,7 @@ class Service extends API {
                     onSuccess(response);
                 })
                 .catch((error) => {
-                    console.warn('Service#list', error.message);
+                    console.warn('CRMOrder#list', error.message);
 
                     onError(error);
                 });
@@ -31,7 +32,7 @@ class Service extends API {
                         onSuccess(response);
                     })
                     .catch((error) => {
-                        console.warn('Service#add', error.message);
+                        console.warn('CRMOrder#add', error.message);
 
                         onError(error);
                     });
@@ -44,22 +45,22 @@ class Service extends API {
                     .then((response) => {
                         onSuccess(response);
                     })
-                    .catch((error) => {
-                        console.warn('Service#edit', error.message);
+                    .catch((error => {
+                        console.warn('CRMOrder#edit', error.message);
 
                         onError(error);
-                    });
+                    }));
             },
             this.delete = (data, onSuccess, onError) => {
                 data = data || {};
-                const request = route + '/delete';
+                const requset = route + '/delete';
 
-                this.postData(request, data)
+                this.postData(requset, data)
                     .then((response) => {
                         onSuccess(response);
                     })
                     .catch((error) => {
-                        console.warn('Service#delete', error.message);
+                        console.warn('CRMOrder#delete', error.message);
 
                         onError(error);
                     });
@@ -67,4 +68,4 @@ class Service extends API {
     }
 }
 
-export default new Service(config.backendUrl);
+export default new CRMOrder(config.backendUrl);

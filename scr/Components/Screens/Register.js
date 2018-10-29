@@ -55,20 +55,16 @@ class Register extends Screen {
 
                 <TextInput
                     style={styles.textInput}
-                    onChangeText={(val) => this.onChangeText(val)}
-                />
+                    onChangeText={(text) => this.setState({ 'login': text })} />
 
                 <TextInput
                     style={styles.textInput}
-                    onChangeText={(val) => this.onChangeText(val)}
-                    textContentType={'password'}
-                />
+                    onChangeText={(text) => this.setState({ 'pass': text })}
+                    secureTextEntry={true} />
 
                 <TextInput
                     style={styles.textInput}
-                    onChangeText={(val) => this.onChangeText(val)}
-                    textContentType={'password'}
-                />
+                    onChangeText={(text) => this.setState({ 'confirm': text })} />
 
                 <Button onPress={this.onRegHandler}
                     title='Зарегестрироваться' />

@@ -1,22 +1,28 @@
 import React from 'react';
-import { StackNavigator } from 'react-navigation';
+import { createStackNavigator } from 'react-navigation';
 
 //Screens
 import Home from './Screens/Home';
 import Login from './Screens/Login';
 import Register from './Screens/Register';
+import ViewOwnPosition from './Screens/ViewOwnPosition';
+import {
+    ViewOwn as ViewOwnOrders,
+    AddEdit as AddEditOrder,
+    Delete as DeleteOrder
+} from './Screens/Orders';
+import ChangeWorkSchedule from './Screens/ChangeWorkSchedule';
 
-const Nav = StackNavigator(
+const Nav = createStackNavigator(
     {
-        Login: {
-            screen: Login
-        },
-        Register: {
-            screen: Register
-        },
-        Home: {
-            screen: Home
-        }
+        Login: { screen: Login },
+        Register: { screen: Register },
+        Home: { screen: Home },
+        ViewOwnPosition: { screen: ViewOwnPosition },
+        ViewOwnOrders: { screen: ViewOwnOrders },
+        AddEditOrder: { screen: AddEditOrder },
+        DeleteOrder: { screen: DeleteOrder },
+        ChangeWorkSchedule: { screen: ChangeWorkSchedule }
     },
     {
         initialRootName: 'Login',
