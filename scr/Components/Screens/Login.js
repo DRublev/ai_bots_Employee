@@ -37,7 +37,6 @@ class Login extends Screen {
                 btnText: 'Вы вошли!'
             });
         }
-
     }
 
     onRegisterHandler = () => {
@@ -45,7 +44,6 @@ class Login extends Screen {
     }
 
     render() {
-        const { login, pass } = this.state;
         return (
             <View style={styles.container}>
                 <TextInput style={styles.textInput}

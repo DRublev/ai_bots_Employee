@@ -28,6 +28,13 @@ const styles = StyleSheet.create({
     }
 });
 
+export const cookiesPath = {
+    user: {
+        token: 'user/token',
+        type: 'user/type',
+    }
+}
+
 export const backendUrl = 'http://192.168.1.5:4800/';
 
 export default styles;

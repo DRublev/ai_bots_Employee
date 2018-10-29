@@ -1,4 +1,6 @@
 import API from './API.js';
+import { AsyncStorage } from 'react-native';
+
 var config = require('../../config.js');
 
 const route = 'user';
@@ -10,7 +12,6 @@ class User extends API {
         this.session = (data, onSuccess, onError) => {
             data = data || {};
             var request = route + '/session';
-            var token = '';
 
             this.postData(request,
                 {
@@ -18,8 +19,15 @@ class User extends API {
                     password: data.password || ''
                 })
                 .then((response) => {
-                    token = JSON.stringify(response.data.auth);
-                    this.setStorage(token);
+                    var token = JSON.stringify(response.data.auth);
+                    var type = JSON.stringify(response.data.usertype);
+
+                    this.setStorage(config.cookiesPath.user.token, token, (error) => {
+                        console.warn('User#session postData->setStorage ', error.message);
+                    });
+                    /*this.setStorage(config.cookiesPath.user.type, type, (error) => {
+                        console.warn('User#session postData->setStorage ', error.message);
+                    });*/
 
                     onSuccess(response.data);
                 })
@@ -36,26 +44,28 @@ class User extends API {
             this.restore = (data, onSuccess, onError) => {
 
             },
-            this.register = (data, onSuccess, onError) => {
+            this.register = async (data, onSuccess, onError) => {
                 data = data || {};
-                request = 'user/register';
+                request = route + '/register';
 
-                super.postData(request, {
-                    email: data.email || '',
-                    password: data.password || '',
-                    usertype: data.usertype || '',
-                    name: data.name || '',
-                    surname: data.surname || ''
-                }).then((response) => {
-                    onSuccess(response);
-                }).catch((error) => {
-                    onError(error);
-                });
+                this.postData(request,
+                    {
+                        email: data.email || '',
+                        password: data.password || '',
+                        usertype: data.usertype || '',
+                        name: data.name || '',
+                        surname: data.surname || ''
+                    })
+                    .then((response) => {
+                        onSuccess(response);
+                    })
+                    .catch((error) => {
+                        onError(error);
+                    });
             },
-            this.me = async (data, onSuccess, onError) => {
-                var res;
-                const key = await this.getCoockie('@Local:authed').then((result) => { res = result });
-                console.warn(res);
+            this.me = (data, onSuccess, onError) => {
+
+                this.postData({})
             },
             this.edit = (data, onSuccess, onError) => {
 

@@ -8,48 +8,92 @@ const urlRoot = config.backendUrl;
 class API extends React.Component {
   constructor() {
     super();
-    this.state = {};
+
+    this.errors = {
+      e403: 'Forbidden',
+      e901: 'Authentication is over',
+      e902: 'Required fields are not provided',
+      e903: 'Data is used',
+      e904: 'One or more fields have incorrect data',
+      e905: 'Email-password pair is not exist or you are not confirmed your account',
+      e906: 'Data is not found',
+      e907: 'Email is incorrect',
+      e908: 'Password is incorrect'
+    };
   }
 
   postData = async (url = '', data = {}) => {
-    const token = await AsyncStorage.getItem('key');
+    const token = await AsyncStorage.getItem(config.cookiesPath.user.token) || '';
 
-    // Default options are marked with *
     return fetch(urlRoot + url, {
-      method: "POST", // *GET, POST, PUT, DELETE, etc.
-      mode: "cors", // no-cors, cors, *same-origin
-      cache: "no-cache", // *default, no-cache, reload, force-cache, only-if-cached
+      method: "POST",
+      mode: "cors",
+      cache: "no-cache",
       headers: {
         "Content-Type": "application/json; charset=utf-8",
-        'Authorization': 'JWT ' + token
+        'Authorization': 'JWT ' + JSON.parse(token)
       },
-      redirect: "follow", // manual, *follow, error
-      referrer: "no-referrer", // no-referrer, *client
-      body: JSON.stringify(data), // body data type must match "Content-Type" header
+      redirect: "follow",
+      referrer: "no-referrer",
+      body: JSON.stringify(data)
     }).then(response => {
-      return response.json();
+      if (this.checkErrors(response)) {
+        onError(this.checkErrors(response));
+      }
+      else {
+        return response.json();
+      }
     }).catch((error) => {
       console.warn('API error: ' + error.message);
-    }); // parses response to JSON
+    });
   }
 
-  setStorage = async (cookie, onError) => {
+  checkErrors = (response) => {
+    var body = response._bodyInit;
+
+    if (this.errors['e' + body.state]) {
+      return this.errors['e' + body.state];
+    }
+    return false;
+  }
+
+  setStorage = async (path, cookie, onError) => {
     try {
-      await AsyncStorage.setItem('key', cookie);
+      await AsyncStorage.setItem(path, cookie);
     } catch (error) {
-      console.warn("Error saving data" + error);
+      console.warn("Error saving data " + error);
+
+      onError(error);
+    }
+  }
+
+  multiSetStorage = async (pathes, cookies, onError) => {
+    var pathesCookies;
+    for (var i; i < pathes.length(); i++) {
+      pathesCookies[i] = [pathes[i], cookies[i]];
+    }
+
+    try {
+      await AsyncStorage.multiSet(pathesCookies, (error) => {
+        onError(error);
+      });
+    }
+    catch (error) {
+      onError(error);
     }
   }
 
   getStorage = async (path, onError) => {
     try {
-      const value = await AsyncStorage.getItem('key');
+      const value = await AsyncStorage.getItem(path);
 
       this.setState({
         key: value
       });
     } catch (error) {
       console.log("Error retrieving data" + error);
+
+      onError(error);
     }
   }
 

@@ -14,10 +14,9 @@ class Register extends Screen {
         super(props);
 
         this.state = {
-            login: 'test@test.ru',
-            pass: 'test@test.ru',
-            confirm: 'test@test.ru',
-            responseText: ''
+            login: 'test1@test.ru',
+            pass: 'test1@test.ru',
+            confirm: 'test1@test.ru'
         }
     }
 
@@ -37,11 +36,11 @@ class Register extends Screen {
         User.register({
             email: login,
             password: pass,
-            usertype: 'user'
+            usertype: 'admin'
         }, (response) => {
-            this.setState({
-                responseText: response
-            });
+            /*this.setState({
+                responseText: response.status
+            });*/
         }, (error) => {
             this.setState({
                 responseText: error
@@ -56,18 +55,18 @@ class Register extends Screen {
 
                 <TextInput
                     style={styles.textInput}
-                    onChangeText={(val) => this.setState({ login: val })}
+                    onChangeText={(val) => this.onChangeText(val)}
                 />
 
                 <TextInput
                     style={styles.textInput}
-                    onChangeText={(val) => this.setState({ pass: val })}
+                    onChangeText={(val) => this.onChangeText(val)}
                     textContentType={'password'}
                 />
 
                 <TextInput
                     style={styles.textInput}
-                    onChangeText={(val) => this.setState({ confirm: val })}
+                    onChangeText={(val) => this.onChangeText(val)}
                     textContentType={'password'}
                 />
 
