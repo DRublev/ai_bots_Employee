@@ -8,8 +8,6 @@ import styles from '../../config';
 import User from '../../helpers/Api/User';
 import Service from "../../helpers/Api/Service";
 import CRMOrder from "../../helpers/Api/CRMOrder";
-const API = require('../../helpers/Api/API.js');
-
 
 const config = require('../../config.js');
 
@@ -27,7 +25,6 @@ class Login extends Screen {
     componentWillMount = () => {
         if (User.isAuthed()) {
             console.warn('User authed');
-            this.navigate('ViewOwn');
         }
     }
 
@@ -161,7 +158,7 @@ class Login extends Screen {
                 <Button title={this.state.btnText} onPress={this.onLoginHandler} />
                 <Button title={'Регистрация'} onPress={this.onRegisterHandler} />
 
-                <Button title={'Fill DB with data'} onPress={this.onFillDb} />
+                
             </View>
         );
     }
