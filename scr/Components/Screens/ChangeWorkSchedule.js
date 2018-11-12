@@ -1,5 +1,5 @@
 import React from 'react';
-import { View, TextInput } from 'react-native';
+import { View, Text } from 'react-native';
 import Screen from './Screen';
 import Button from '../Button';
 import styles from '../../config';

@@ -21,9 +21,9 @@ class Screen extends React.Component {
     }
 
     goBack = () => {
-        const { navigate } = this.props.navigation;
+        const { goBack } = this.props.navigation;
 
-        navigate.goBack();
+        goBack();
     }
 
     navigate = (route) => {

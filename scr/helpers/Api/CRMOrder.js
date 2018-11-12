@@ -1,7 +1,6 @@
 import API from './API.js';
-import { AsyncStorage } from 'react-native';
 
-var config = require('../../config.js');
+const config = require('../../config.js');
 
 const route = 'crmorder';
 
@@ -33,7 +32,6 @@ class CRMOrder extends API {
                     })
                     .catch((error) => {
                         console.warn('CRMOrder#add', error.message);
-
                         onError(error);
                     });
             },

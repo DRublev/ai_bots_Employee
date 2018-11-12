@@ -25,6 +25,14 @@ const styles = StyleSheet.create({
     },
     listView: {
         margin: 0.2
+    },
+    horizontalFlex: {
+        flex: 1,
+        flexDirection: 'row',
+        justifyContent: 'flex-start'
+    },
+    navItem: {
+        padding: 10
     }
 });
 
@@ -35,6 +43,6 @@ export const cookiesPath = {
     }
 }
 
-export const backendUrl = 'http://192.168.1.5:4800/';
+export const backendUrl = 'http://192.168.1.2:4800/';
 
 export default styles;

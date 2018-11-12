@@ -1,6 +1,6 @@
 import API from './API.js';
 
-var config = require('../../config.js');
+const config = require('../../config.js');
 
 const route = 'user';
 
@@ -193,6 +193,9 @@ class User extends API {
                     .catch((error) => {
                         console.warn('User#view', error.message);
                     });
+            },
+            this.isAuthed = async () => {
+                return await this.getStorage(config.cookiesPath.user.token);
             }
     }
 }

@@ -1,8 +1,8 @@
 import React from 'react';
-import { View, TextInput } from 'react-native';
-import Screen from './Screen';
-import Button from '../Button';
-import styles from '../../config';
+import { View, Text, TextInput } from 'react-native';
+import Screen from '../Screen';
+import Button from '../../Button';
+import styles from '../../../config';
 
 class AddEdit extends Screen {
     constructor(props) {
@@ -14,7 +14,7 @@ class AddEdit extends Screen {
             <View style={styles.container}>
                 <Text>Add and edit screen</Text>
 
-                <Button onPress={this.goBack()} />
+                <Button onPress={this.goBack} />
             </View>
         );
     }
