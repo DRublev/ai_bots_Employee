@@ -113,15 +113,12 @@ class API extends React.Component {
    * @param onError Callback on error
    * @returns Data from storage
    */
-  getStorage = (path, onError) => {
-    var value;
+  getStorage = async (path, onError) => {
+    var value = '';
     try {
-      const tmp = async () => {
-        return await AsyncStorage.getItem(path).then(val => {
-          value = val;
-          console.warn('Val ' + val);
-        });
-      }
+      await AsyncStorage.getItem(path, (err, res) => {
+        value = JSON.parse(res);
+      });
 
       return value;
     } catch (error) {
@@ -137,6 +134,17 @@ class API extends React.Component {
    */
   clearStorage = async () => {
     return await AsyncStorage.clear();
+  }
+
+  /**
+   * Remove item from storeage by it's path
+   * @async
+   * @param onDone Callback on item's been removed. Must accept arguments: error, result
+   */
+  removeItemFromStorage = async (path, onDone) => {
+    await AsyncStorage.removeItem(path, (error, result) => {
+      onDone(error, result);
+    });
   }
 }
 

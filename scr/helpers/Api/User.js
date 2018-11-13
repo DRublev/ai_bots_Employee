@@ -204,10 +204,10 @@ class User extends API {
             },
             /**
              * Exit from account and clear token
-             * @param callback Callback on exit 
+             * @param callback Callback on done
              */
             this.exit = async (callback) => {
-                console.warn(this.getStorage(config.cookiesPath.user.token));
+                await this.removeItemFromStorage(config.cookiesPath.user.token, callback);
             }
     }
 }

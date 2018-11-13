@@ -30,7 +30,10 @@ class ViewOwn extends Screen {
     }
 
     onExitHandler = () => {
-        User.exit();
+        User.exit(() => {
+            this.alert('You have been successfully logged out');
+            this.navigate('AuthLoading');
+        });
     }
 
     onOrderPressHandler = (order) => {
