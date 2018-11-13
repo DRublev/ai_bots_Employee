@@ -67,8 +67,10 @@ class API extends React.Component {
    * @returns Error description or false if no error
    */
   checkErrors = (response) => {
-    if (this.errors['e' + JSON.parse(response.status)]) {
-      return this.errors['e' + JSON.parse(response.status)];
+    const body = response._bodyInit;
+
+    if (this.errors['e' + JSON.parse(body).status]) {
+      return this.errors['e' + JSON.parse(body).status];
     }
     return false;
   }

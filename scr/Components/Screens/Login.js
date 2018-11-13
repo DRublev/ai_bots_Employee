@@ -1,5 +1,5 @@
 import React from 'react';
-import { View, TextInput } from 'react-native';
+import { View, TextInput, Text } from 'react-native';
 import Screen from './Screen';
 import Button from '../Button';
 import styles from '../../config';
@@ -17,34 +17,38 @@ class Login extends Screen {
 
         this.state = {
             login: 'admin@admin.ru',
-            pass: 'admin@admin.ru'
+            pass: 'admin@admin.ru',
+            error: ''
         }
     }
 
-    onLoginHandler = async () => {
-        this.setState({
-            auth: ''
-        });
-
+    onLoginHandler = () => {
         User.session({
             email: this.state.login,
             password: this.state.pass
         }, (data) => {
             this.navigate('AuthLoading');
+        }, () => {
+            this.setState({
+                error: 'Неверный логин или пароль'
+            });
         });
     }
 
     render() {
         return (
             <View style={styles.container}>
+                <Text>
+                    {this.state.error}
+                </Text>
                 <TextInput style={styles.textInput}
-                    onChange={(val) => {
+                    onChangeText={(text) => {
                         this.setState({
-                            login: val
+                            login: text
                         });
                     }} />
                 <TextInput style={styles.textInput}
-                    onChange={(val) => {
+                    onChangeText={(val) => {
                         this.setState({
                             pass: val
                         });
