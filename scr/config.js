@@ -1,6 +1,9 @@
 import React from 'react';
 import { StyleSheet } from 'react-native';
 
+/**
+ * Styles for UI elements
+ */
 const styles = StyleSheet.create({
     container: {
         flex: 1,
@@ -36,6 +39,9 @@ const styles = StyleSheet.create({
     }
 });
 
+/**
+ * Pathes for AsyncStorage
+ */
 export const cookiesPath = {
     user: {
         token: 'user/token',
@@ -43,6 +49,10 @@ export const cookiesPath = {
     }
 }
 
+/**
+ * Backend URL
+ * Must ends with /
+ */
 export const backendUrl = 'http://192.168.1.2:4800/';
 
 export default styles;

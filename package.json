@@ -9,6 +9,7 @@
   "dependencies": {
     "@babel/runtime": "^7.1.2",
     "metro": "^0.48.1",
+    "node-pushnotifications": "^1.1.7",
     "react": "16.6.0-alpha.8af6728",
     "react-native": "0.57.1",
     "react-native-cookies": "^3.3.0",

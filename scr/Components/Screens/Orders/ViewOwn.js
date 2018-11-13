@@ -1,9 +1,6 @@
 import React from 'react';
 import { View, Text } from 'react-native';
-import { List } from 'react-native-elements';
-import Icon from 'react-native-vector-icons/MaterialIcons';
 import Screen from '../Screen';
-import BottomNavigation from '../../BottomNavigation';
 import Button from '../../Button';
 import styles from '../../../config';
 
@@ -11,6 +8,7 @@ import Order from './Order';
 
 // Helpers
 import CRMOrder from '../../../helpers/Api/CRMOrder';
+import User from '../../../helpers/Api/User';
 
 class ViewOwn extends Screen {
     constructor(props) {
@@ -31,8 +29,8 @@ class ViewOwn extends Screen {
         });
     }
 
-    onAddHandler = () => {
-        this.navigate('AddEdit');
+    onExitHandler = () => {
+        User.exit();
     }
 
     onOrderPressHandler = (order) => {
@@ -57,9 +55,8 @@ class ViewOwn extends Screen {
 
                 }
 
-                <Button titile={'Добавить'} onPress={this.onAddHandler} />
+                <Button title={'Выход'} onPress={this.onExitHandler} />
 
-                <BottomNavigation />
             </View>
         );
     }

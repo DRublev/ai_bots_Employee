@@ -25,8 +25,16 @@ class API extends React.Component {
     };
   }
 
+  /**
+   * Send request to server
+   * @async
+   * @param url API url
+   * @param data data to send
+   * @returns Parsed response from server
+   * @throws Error with error message if response contains error code
+   */
   postData = async (url = '', data = {}) => {
-    const token = await AsyncStorage.getItem(config.cookiesPath.user.token) || '';
+    const token = await AsyncStorage.getItem(config.cookiesPath.user.token);
 
     return fetch(urlRoot + url, {
       method: "POST",
@@ -34,7 +42,7 @@ class API extends React.Component {
       cache: "no-cache",
       headers: {
         "Content-Type": "application/json; charset=utf-8",
-        'Authorization': 'JWT ' + JSON.parse(token)
+        'Authorization': 'JWT ' + (token) ? JSON.parse(token) : '111'
       },
       redirect: "follow",
       referrer: "no-referrer",
@@ -53,18 +61,28 @@ class API extends React.Component {
     });
   }
 
+  /**
+   * Check response from server for errors
+   * @param response Response from server
+   * @returns Error description or false if no error
+   */
   checkErrors = (response) => {
-    var body = response._bodyInit;
-    if (this.errors['e' + JSON.parse(body).status]) {
-      return this.errors['e' + JSON.parse(body).status];
+    if (this.errors['e' + JSON.parse(response.status)]) {
+      return this.errors['e' + JSON.parse(response.status)];
     }
     return false;
   }
 
+  /**
+   * Store data in storage
+   * @async
+   * @param path Path to data from config.cookiesPathes
+   * @param cookie Data to storage
+   * @param onError Callback on error
+   */
   setStorage = async (path, cookie, onError) => {
     try {
       await AsyncStorage.setItem(path, cookie);
-      console.warn('API#setStorage with content: ' + cookie, path);
     } catch (error) {
       console.warn("Error saving data " + error);
 
@@ -88,13 +106,22 @@ class API extends React.Component {
     }
   }
 
-  getStorage = async (path, onError) => {
+  /**
+   * Get data from storage
+   * @async
+   * @param path Path to data
+   * @param onError Callback on error
+   * @returns Data from storage
+   */
+  getStorage = (path, onError) => {
+    var value;
     try {
-      const value = await AsyncStorage.getItem(path);
-
-      /*this.setState({
-        key: value
-      });*/
+      const tmp = async () => {
+        return await AsyncStorage.getItem(path).then(val => {
+          value = val;
+          console.warn('Val ' + val);
+        });
+      }
 
       return value;
     } catch (error) {
@@ -104,7 +131,11 @@ class API extends React.Component {
     }
   }
 
-  clearStorage = async (onError) => {
+  /**
+   * Delete all data from storage
+   * @async
+   */
+  clearStorage = async () => {
     return await AsyncStorage.clear();
   }
 }

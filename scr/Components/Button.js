@@ -3,6 +3,9 @@ import { Text, TouchableOpacity } from 'react-native';
 
 import styles from '../config';
 
+/**
+ * Custom button 'cause Button from react-native causes an error
+ */
 class Button extends React.Component {
     constructor(props) {
         super(props);
