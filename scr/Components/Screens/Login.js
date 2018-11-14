@@ -16,8 +16,8 @@ class Login extends Screen {
         super(props);
 
         this.state = {
-            login: 'admin@admin.ru',
-            pass: 'admin@admin.ru',
+            login: '',
+            pass: '',
             error: ''
         }
     }

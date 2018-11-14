@@ -34,7 +34,7 @@ class API extends React.Component {
    * @throws Error with error message if response contains error code
    */
   postData = async (url = '', data = {}) => {
-    const token = await AsyncStorage.getItem(config.cookiesPath.user.token);
+    const token = await this.getStorage(config.cookiesPath.user.token);
 
     return fetch(urlRoot + url, {
       method: "POST",
@@ -42,7 +42,7 @@ class API extends React.Component {
       cache: "no-cache",
       headers: {
         "Content-Type": "application/json; charset=utf-8",
-        'Authorization': 'JWT ' + (token) ? JSON.parse(token) : '111'
+        'Authorization': (token) ? 'JWT ' + token : 'JWT'
       },
       redirect: "follow",
       referrer: "no-referrer",
@@ -55,7 +55,7 @@ class API extends React.Component {
         return response.json();
       }
     }).catch((error) => {
-      console.warn('API error: ' + error.message);
+      console.warn('API#postData ' + error.message);
 
       throw new Error(error.message);
     });

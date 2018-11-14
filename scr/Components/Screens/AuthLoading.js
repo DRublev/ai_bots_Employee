@@ -7,6 +7,8 @@ import {
 } from 'react-native';
 import styles from '../../config';
 
+import User from '../../helpers/Api/User';
+
 const config = require('../../config.js');
 
 /**
@@ -19,7 +21,7 @@ class AuthLoadingScreen extends React.Component {
     }
 
     _bootstrapAsync = async () => {
-        const userToken = await AsyncStorage.getItem(config.cookiesPath.user.token);
+        const userToken = await User.getToken();//await AsyncStorage.getItem(config.cookiesPath.user.token);
 
         // This will switch to the App screen or Auth screen and this loading
         // screen will be unmounted and thrown away.
