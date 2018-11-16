@@ -1,5 +1,11 @@
 import React from 'react';
-import { View, TextInput, Text } from 'react-native';
+import {
+    View,
+    TextInput,
+    Text,
+    ImageBackground,
+    Image
+} from 'react-native';
 import Screen from './Screen';
 import Button from '../Button';
 import styles from '../../config';
@@ -18,7 +24,10 @@ class Login extends Screen {
         this.state = {
             login: '',
             pass: '',
-            error: ''
+            errors: {
+                pass: '',
+                login: ''
+            }
         }
     }
 
@@ -30,33 +39,63 @@ class Login extends Screen {
             this.navigate('AuthLoading');
         }, () => {
             this.setState({
-                error: 'Неверный логин или пароль'
+                errors: {
+                    pass: 'Неверный логин или пароль'
+                }
             });
         });
     }
 
     render() {
+        var { errors } = this.state;
         return (
-            <View style={styles.container}>
-                <Text>
-                    {this.state.error}
-                </Text>
-                <TextInput style={styles.textInput}
-                    onChangeText={(text) => {
-                        this.setState({
-                            login: text
-                        });
-                    }} />
-                <TextInput style={styles.textInput}
-                    onChangeText={(val) => {
-                        this.setState({
-                            pass: val
-                        });
-                    }}
-                    secureTextEntry={true} />
+            <ImageBackground
+                source={config.imgsPathes.blueBackground}
+                style={styles.imageBackground}>
+                <View
+                    style={styles.container}>
+                    <Image
+                        source={config.imgsPathes.logo} style={styles.logo} />
 
-                <Button title={'Войти'} onPress={this.onLoginHandler} />
-            </View>
+                    <TextInput
+                        style={styles.textInput}
+                        key={'loginInput'}
+                        placeholder='Логин'
+                        placeholderTextColor={'#949494'}
+                        onChangeText={(text) => {
+                            this.setState({
+                                login: text
+                            });
+                        }} />
+                    {
+                        <Text style={styles.smallText}>
+                            {errors.login ? errors.login : ''}
+                        </Text>
+                    }
+
+                    <TextInput
+                        style={styles.textInput}
+                        key={'passInput'}
+                        placeholder='Пароль'
+                        placeholderTextColor={'#949494'}
+                        secureTextEntry={true}
+                        onChangeText={(text) => {
+                            this.setState({
+                                pass: text
+                            });
+                        }} />
+                    {
+                        <Text style={styles.smallText}>
+                            {errors.pass ? errors.pass : ''}
+                        </Text>
+                    }
+
+                    <Button
+                        style={styles.button}
+                        title={'Войти'}
+                        onPress={this.onLoginHandler} />
+                </View>
+            </ImageBackground>
         );
     }
 }

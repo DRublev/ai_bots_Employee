@@ -1,14 +1,18 @@
 import React from 'react';
-import { View, Text } from 'react-native';
+import { View, Text, SectionList, TouchableOpacity } from 'react-native';
 import Screen from '../Screen';
-import Button from '../../Button';
 import styles from '../../../config';
+
+import NotificationsIOS, { NotificationsAndroid } from 'react-native-notifications';
 
 import Order from './Order';
 
 // Helpers
 import CRMOrder from '../../../helpers/Api/CRMOrder';
 import User from '../../../helpers/Api/User';
+
+
+var PushNotification = require('react-native-push-notification');
 
 class ViewOwn extends Screen {
     constructor(props) {
@@ -27,6 +31,15 @@ class ViewOwn extends Screen {
         }, (error) => {
             this.alert(error.message);
         });
+
+        PushNotification.onRegister = () => {
+            console.warn('onRegister');
+        }
+
+        NotificationsAndroid.setRegistrationTokenUpdateListener(() => {
+            console.warn('called');
+        })
+        NotificationsAndroid.refreshToken();
     }
 
     onExitHandler = () => {
@@ -43,23 +56,35 @@ class ViewOwn extends Screen {
     render() {
         var { orders } = this.state;
         return (
-            <View style={styles.container}>
-                <Text>View own orders screen</Text>
+            <View style={styles.greyContainer}>
+                <Text style={styles.titleText}>{'Список заявок'}</Text>
+                <SectionList
+                    sections={[
+                        { title: 'D', data: orders, key: 0 },
+                        { title: 'J', data: orders, key: 1 },
+                    ]}
+                    renderItem={
+                        ({ item, section }) => {
+                            return (
+                                <TouchableOpacity
+                                    onPress={() => {
+                                        this.navigate('Order', { order: item });
+                                    }}>
+                                    <Text>
+                                        {item.name}
+                                    </Text>
+                                </TouchableOpacity>
 
-                {
-                    orders &&
-                    orders.map((order, key) => {
-                        return (
-                            <Order key={key} title={order.name}
-                                order={order}
-                                onPress={() => this.onOrderPressHandler(order)} />
-                        );
-                    })
-
-                }
-
-                <Button title={'Выход'} onPress={this.onExitHandler} />
-
+                            );
+                        }
+                    }
+                    renderSectionHeader={
+                        ({ section, i }) =>
+                            <Text style={styles.sectionHeader}>
+                                {section.title}
+                            </Text>
+                    }
+                    keyExtractor={(item, index) => index} />
             </View>
         );
     }

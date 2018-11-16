@@ -2,10 +2,10 @@ import React from 'react';
 import { Platform } from 'react-native';
 import {
     createSwitchNavigator,
-    createStackNavigator,
-    createBottomTabNavigator
+    createStackNavigator
 } from 'react-navigation';
-import Ionicons from 'react-native-vector-icons/MaterialIcons';
+
+import Header from './Header';
 
 //Screens
 import AuthLoading from './Screens/AuthLoading';
@@ -13,8 +13,6 @@ import ViewOwn from './Screens/Orders/ViewOwn';
 import Order from './Screens/Orders/Order';
 import ChangeWorkSchedule from './Screens/ChangeWorkSchedule';
 import Login from './Screens/Login';
-
-import User from '../helpers/Api/User';
 
 //Navigators
 const AuthNavigator = createStackNavigator(
@@ -29,20 +27,26 @@ const AuthNavigator = createStackNavigator(
     }
 );
 
-const AppNavigator = createBottomTabNavigator({
-    ViewOrders: {
-        screen: ViewOwn,
-        path: 'orders'
+const AppNavigator = createStackNavigator(
+    {
+        ViewOrders: {
+            screen: ViewOwn,
+        },
+        Schedule: {
+            screen: ChangeWorkSchedule,
+        },
+        Order: {
+            screen: Order
+        }
     },
-    Schedule: {
-        screen: ChangeWorkSchedule,
-        path: 'schedule'
-    },
-    Order: {
-        screen: Order,
-        path: 'order/:order'
+    {
+        initialRouteName: 'ViewOrders',
+        headerMode: 'screen',
+        navigationOptions: {
+            header: Header
+        }
     }
-});
+);
 
 const Nav = createSwitchNavigator(
     {
@@ -63,7 +67,7 @@ class Navigator extends React.Component {
     render = () => {
         const { navigation } = this.props;
 
-        return <Nav navigation={navigation} uriPrefix={uriPrefix} />
+        return <Nav navigation={navigation}/>
     }
 }
 

@@ -32,10 +32,9 @@ class Screen extends React.Component {
     /**
      * Use this to navigate between screns
      */
-    navigate = (route) => {
+    navigate = (route, params) => {
         const { navigate } = this.props.navigation;
-
-        navigate(route, { screen: route });
+        navigate(route, params);
     }
 
     alert = (title, msg, buttons) => {

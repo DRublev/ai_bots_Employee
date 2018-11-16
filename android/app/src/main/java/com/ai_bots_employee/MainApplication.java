@@ -4,13 +4,16 @@ import android.app.Application;
 
 import com.facebook.react.ReactApplication;
 import com.oblador.vectoricons.VectorIconsPackage;
-import com.dieam.reactnativepushnotification.ReactNativePushNotificationPackage;
+import com.wix.reactnativenotifications.RNNotificationsPackage;
+import com.devicetoken.RNDeviceTokenPackage;
 import com.wix.reactnativenotifications.RNNotificationsPackage;
 import com.psykar.cookiemanager.CookieManagerPackage;
 import com.facebook.react.ReactNativeHost;
 import com.facebook.react.ReactPackage;
 import com.facebook.react.shell.MainReactPackage;
 import com.facebook.soloader.SoLoader;
+import com.evollu.react.fcm.FIRMessagingPackage;
+import com.dieam.reactnativepushnotification.ReactNativePushNotificationPackage;
 
 import java.util.Arrays;
 import java.util.List;
@@ -28,9 +31,12 @@ public class MainApplication extends Application implements ReactApplication {
       return Arrays.<ReactPackage>asList(
           new MainReactPackage(),
             new VectorIconsPackage(),
-            new ReactNativePushNotificationPackage(),
             new RNNotificationsPackage(),
-            new CookieManagerPackage()
+            new FIRMessagingPackage(),
+            new RNDeviceTokenPackage(),
+            new RNNotificationsPackage(MainApplication.this),
+            new CookieManagerPackage(),
+            new ReactNativePushNotificationPackage()
       );
     }
 

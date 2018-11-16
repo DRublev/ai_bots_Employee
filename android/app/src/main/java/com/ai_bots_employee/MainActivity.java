@@ -2,6 +2,8 @@ package com.ai_bots_employee;
 
 import com.facebook.react.ReactActivity;
 
+import android.content.Intent;
+
 public class MainActivity extends ReactActivity {
 
     /**
@@ -11,5 +13,11 @@ public class MainActivity extends ReactActivity {
     @Override
     protected String getMainComponentName() {
         return "ai_bots_Employee";
+    }
+
+    @Override
+    public void onNewIntent(Intent intent) {
+        super.onNewIntent(intent);
+        setIntent(intent);
     }
 }
